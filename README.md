@@ -1,4 +1,4 @@
-# Deriv AI Compliance Manager
+# ComplAi AI Compliance Manager
 
 An AI-powered compliance monitoring dashboard for crypto trading that combines behavioral anomaly detection with regulatory intelligence across three jurisdictions — Malta, UAE, and Cayman Islands.
 
