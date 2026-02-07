@@ -1,0 +1,142 @@
+[
+  {
+    "user_id": "MT-USER-001",
+    "avg_tx_amount_usd": 312.6,
+    "avg_daily_total_usd": 1330.17,
+    "avg_tx_per_day": 4,
+    "std_dev_amount": 89.78,
+    "normal_hour_range": [
+      8,
+      19
+    ],
+    "excluded_anomalies_count": 0,
+    "min_tx_amount_usd": 0.0,
+    "max_tx_amount_usd": 0.0
+  },
+  {
+    "user_id": "MT-USER-002",
+    "avg_tx_amount_usd": 1223.7,
+    "avg_daily_total_usd": 4933.22,
+    "avg_tx_per_day": 4,
+    "std_dev_amount": 317.84,
+    "normal_hour_range": [
+      8,
+      18
+    ],
+    "excluded_anomalies_count": 0,
+    "min_tx_amount_usd": 0.0,
+    "max_tx_amount_usd": 0.0
+  },
+  {
+    "user_id": "MT-USER-003",
+    "avg_tx_amount_usd": 394.71,
+    "avg_daily_total_usd": 1861.95,
+    "avg_tx_per_day": 4,
+    "std_dev_amount": 431.96,
+    "normal_hour_range": [
+      8,
+      21
+    ],
+    "excluded_anomalies_count": 5,
+    "min_tx_amount_usd": 0.0,
+    "max_tx_amount_usd": 0.0
+  },
+  {
+    "user_id": "AE-USER-001",
+    "avg_tx_amount_usd": 1246.7,
+    "avg_daily_total_usd": 6229.57,
+    "avg_tx_per_day": 5,
+    "std_dev_amount": 425.39,
+    "normal_hour_range": [
+      8,
+      19
+    ],
+    "excluded_anomalies_count": 0,
+    "min_tx_amount_usd": 0.0,
+    "max_tx_amount_usd": 0.0
+  },
+  {
+    "user_id": "AE-USER-002",
+    "avg_tx_amount_usd": 269.41,
+    "avg_daily_total_usd": 966.78,
+    "avg_tx_per_day": 3,
+    "std_dev_amount": 102.54,
+    "normal_hour_range": [
+      8,
+      20
+    ],
+    "excluded_anomalies_count": 0,
+    "min_tx_amount_usd": 0.0,
+    "max_tx_amount_usd": 0.0
+  },
+  {
+    "user_id": "AE-USER-003",
+    "avg_tx_amount_usd": 1449.2,
+    "avg_daily_total_usd": 4587.68,
+    "avg_tx_per_day": 3,
+    "std_dev_amount": 258.5,
+    "normal_hour_range": [
+      8,
+      15
+    ],
+    "excluded_anomalies_count": 0,
+    "min_tx_amount_usd": 0.0,
+    "max_tx_amount_usd": 0.0
+  },
+  {
+    "user_id": "AE-USER-004",
+    "avg_tx_amount_usd": 410.6,
+    "avg_daily_total_usd": 936.88,
+    "avg_tx_per_day": 3,
+    "std_dev_amount": 36.15,
+    "normal_hour_range": [
+      8,
+      17
+    ],
+    "excluded_anomalies_count": 2,
+    "min_tx_amount_usd": 0.0,
+    "max_tx_amount_usd": 0.0
+  },
+  {
+    "user_id": "KY-USER-001",
+    "avg_tx_amount_usd": 400.33,
+    "avg_daily_total_usd": 1950.25,
+    "avg_tx_per_day": 4,
+    "std_dev_amount": 33.33,
+    "normal_hour_range": [
+      8,
+      18
+    ],
+    "excluded_anomalies_count": 0,
+    "min_tx_amount_usd": 0.0,
+    "max_tx_amount_usd": 0.0
+  },
+  {
+    "user_id": "KY-USER-002",
+    "avg_tx_amount_usd": 1181.98,
+    "avg_daily_total_usd": 3890.61,
+    "avg_tx_per_day": 3,
+    "std_dev_amount": 402.28,
+    "normal_hour_range": [
+      9,
+      18
+    ],
+    "excluded_anomalies_count": 0,
+    "min_tx_amount_usd": 0.0,
+    "max_tx_amount_usd": 0.0
+  },
+  {
+    "user_id": "KY-USER-003",
+    "avg_tx_amount_usd": 250.41,
+    "avg_daily_total_usd": 751.22,
+    "avg_tx_per_day": 3,
+    "std_dev_amount": 148.66,
+    "normal_hour_range": [
+      8,
+      20
+    ],
+    "excluded_anomalies_count": 0,
+    "min_tx_amount_usd": 57.1,
+    "max_tx_amount_usd": 499.36
+  }
+]

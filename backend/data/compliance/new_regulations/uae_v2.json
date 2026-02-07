@@ -1,0 +1,20 @@
+[
+  {
+    "regulation_update_id": "AE-REG-001",
+    "update_title": "VARA Stablecoin Issuance Guidelines",
+    "summary": "Requires all stablecoin issuers and traders in UAE to obtain VARA licensing. Mandates AED-denominated reserve audits quarterly, bans privacy coins (Monero, ZCash), and introduces geo-fencing requirements for non-UAE IP addresses. Penalties up to AED 20 million.",
+    "date_effective": "March 15, 2026"
+  },
+  {
+    "regulation_update_id": "AE-REG-002",
+    "update_title": "DFSA Token Suitability Assessment Framework",
+    "summary": "DIFC-based framework requiring platforms to assess token suitability for retail investors, implement geo-fencing for restricted jurisdictions, and conduct real-time risk profiling. Introduces mandatory cooling-off periods for transactions above AED 100,000.",
+    "date_effective": "June 1, 2026"
+  },
+  {
+    "regulation_update_id": "AE-REG-003",
+    "update_title": "CARF Crypto-Asset Reporting Framework (UAE Adoption)",
+    "summary": "UAE adoption of the OECD Crypto-Asset Reporting Framework requiring automatic exchange of crypto transaction information with 50+ jurisdictions. Mandatory reporting for transactions exceeding AED 50,000 (~$13,600). Annual compliance certification required.",
+    "date_effective": "September 1, 2026"
+  }
+]

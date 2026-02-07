@@ -1,0 +1,74 @@
+{
+  "jurisdiction": "UAE",
+  "jurisdiction_code": "AE",
+  "current_version": "v2",
+  "old_regulations": [
+    {
+      "regulation_update_id": "AE-OLD-001",
+      "update_title": "SCA Crypto Asset Regulation 2020",
+      "summary": "Securities and Commodities Authority framework for crypto asset activities, requiring licensing of exchanges and custodians, AML/CFT compliance, and investor protection measures. Penalties up to AED 10 million.",
+      "date_effective": "October 15, 2020"
+    },
+    {
+      "regulation_update_id": "AE-OLD-002",
+      "update_title": "ADGM Financial Services Regulatory Framework 2018",
+      "summary": "Abu Dhabi Global Market framework for digital asset regulation including spot crypto assets, requiring licensing, conduct of business rules, and technology governance standards.",
+      "date_effective": "June 25, 2018"
+    },
+    {
+      "regulation_update_id": "AE-OLD-003",
+      "update_title": "UAE Central Bank AML/CFT Guidance 2021",
+      "summary": "Central Bank guidance on anti-money laundering and counter-terrorism financing for virtual asset service providers, including customer due diligence and suspicious transaction reporting requirements.",
+      "date_effective": "March 1, 2021"
+    }
+  ],
+  "new_regulations": [
+    {
+      "regulation_update_id": "AE-REG-001",
+      "update_title": "VARA Stablecoin Issuance Guidelines",
+      "summary": "Requires all stablecoin issuers and traders in UAE to obtain VARA licensing. Mandates AED-denominated reserve audits quarterly, bans privacy coins (Monero, ZCash), and introduces geo-fencing requirements for non-UAE IP addresses. Penalties up to AED 20 million.",
+      "date_effective": "March 15, 2026"
+    }
+  ],
+  "rulebook": {
+    "amount_based": [
+      "Transaction amount > 3× user's historical average (violates basic AML thresholds under SCA regulation)",
+      "Daily total amount > 2× user's usual daily total",
+      "Single transaction exceeding AED 55,000 (~$15,000) requires enhanced due diligence"
+    ],
+    "frequency_based": [
+      "Transactions per day > 2× user's normal frequency",
+      "Multiple transactions within 15 min (burst activity)",
+      "More than 8 transactions in a single day triggers review"
+    ],
+    "location_based": [
+      "Transaction from a new country not seen in history",
+      "Rapid country switching within short time (geo-hopping)",
+      "Transactions from FATF grey-list or sanctioned jurisdictions"
+    ],
+    "behavioural_pattern": [
+      "Inconsistent behaviour vs declared profile (e.g., high volume from low-activity history)",
+      "Sudden shift to privacy coins (Monero, ZCash) from standard tokens",
+      "Round-number transactions suggesting structuring or layering"
+    ],
+    "risk_score": {
+      "range": "0-100",
+      "rules": [
+        { "category": "Amount", "rule": "Single tx > 5× user avg", "points": 55 },
+        { "category": "Amount", "rule": "Single tx > 3× user avg (but ≤5×)", "points": 35 },
+        { "category": "Amount/Volume", "rule": "Daily total > 2× avg daily", "points": 30 },
+        { "category": "Frequency", "rule": "≥4 tx in ≤15 min (burst)", "points": 35 },
+        { "category": "Geo", "rule": "New country (never seen before)", "points": 45 },
+        { "category": "Geo", "rule": "Impossible geo hop (actual time < min travel time)", "points": 60 },
+        { "category": "Profile", "rule": "High volume inconsistent with profile", "points": 35 }
+      ],
+      "capping": "min(risk_score, 100)"
+    },
+    "risk_bands": {
+      "HIGH": "≥75 (alert for DFSA/VARA non-compliance)",
+      "MEDIUM": "50–74 (review for AML risks)",
+      "LOW": "25–49 (watch for patterns)",
+      "CLEAN": "<25"
+    }
+  }
+}

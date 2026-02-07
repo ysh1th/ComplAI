@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-deriv-red: #FF444F;
+  --color-deriv-black: var(--surface-base);
+  --color-deriv-dark-card: var(--surface-card);
+  --color-deriv-dark-border: var(--surface-border);
+  --color-deriv-teal: #00A79E;
+  --color-deriv-amber: #F5A623;
+  --color-deriv-grey: var(--text-muted);
+  --color-light-bg: #F5F5F5;
+  --color-light-card: #FFFFFF;
+  --color-light-border: #E0E0E0;
+}
+
+:root {
+  --background: #0E0E0E;
+  --foreground: #ededed;
+  --surface-base: #0E0E0E;
+  --surface-card: #1A1A1A;
+  --surface-border: #2A2A2A;
+  --text-muted: #6B7280;
+}
+
+[data-theme="light"] {
+  --background: #F5F5F5;
+  --foreground: #171717;
+  --surface-base: #F0F0F0;
+  --surface-card: #FFFFFF;
+  --surface-border: #E0E0E0;
+  --text-muted: #6B7280;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Light mode overrides for hardcoded Tailwind classes */
+[data-theme="light"] .text-white {
+  color: #171717 !important;
+}
+[data-theme="light"] .bg-white\/5 {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+[data-theme="light"] .hover\:bg-white\/5:hover {
+  background-color: rgba(0, 0, 0, 0.06) !important;
+}
+[data-theme="light"] .bg-black\/30 {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+[data-theme="light"] .bg-deriv-black\/50 {
+  background-color: rgba(240, 240, 240, 0.5) !important;
+}
+[data-theme="light"] .bg-deriv-dark-card\/50 {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+}
+[data-theme="light"] .bg-deriv-dark-card\/30 {
+  background-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #2A2A2A;
+  border-radius: 3px;
+}
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+}
+
+/* Risk pulse animation */
+@keyframes risk-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 68, 79, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(255, 68, 79, 0); }
+}
+
+.animate-risk-pulse {
+  animation: risk-pulse 1s ease-in-out 2;
+}
+
+/* Terminal cursor blink */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}

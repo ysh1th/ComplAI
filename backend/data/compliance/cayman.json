@@ -1,0 +1,108 @@
+{
+  "jurisdiction": "Cayman Islands",
+  "jurisdiction_code": "KY",
+  "current_version": "v2",
+  "old_regulations": [
+    {
+      "regulation_update_id": "KY-OLD-001",
+      "update_title": "Virtual Asset (Service Providers) Act 2020",
+      "summary": "Requires registration and licensing of virtual asset service providers (VASPs), including exchanges and custodians. Mandates AML/CFT compliance, record-keeping, and cooperation with CIMA supervisory requirements.",
+      "date_effective": "October 31, 2020"
+    },
+    {
+      "regulation_update_id": "KY-OLD-002",
+      "update_title": "Anti-Money Laundering Regulations 2020 (VASP Amendment)",
+      "summary": "Extends AML obligations to virtual asset service providers including customer due diligence, ongoing monitoring, and suspicious activity reporting to the Financial Reporting Authority.",
+      "date_effective": "October 31, 2020"
+    },
+    {
+      "regulation_update_id": "KY-OLD-003",
+      "update_title": "CIMA Regulatory Policy \u2014 Virtual Assets 2021",
+      "summary": "CIMA policy guidance on supervisory approach to virtual assets, including risk-based supervision, governance standards, and technology risk management requirements for VASPs.",
+      "date_effective": "January 15, 2021"
+    }
+  ],
+  "new_regulations": [
+    {
+      "regulation_update_id": "KY-REG-001",
+      "update_title": "VASP Enhanced Due Diligence Requirements",
+      "summary": "Strengthens customer due diligence for VASPs with mandatory biometric verification for transactions over $10,000 KYD, enhanced screening against OFAC and UN sanctions lists, and real-time transaction monitoring. Introduces a 48-hour suspicious transaction reporting window to FRA.",
+      "date_effective": "April 1, 2026"
+    }
+  ],
+  "rulebook": {
+    "amount_based": [
+      "Transaction amount > 3\u00d7 user's historical average (violates VASP Act AML thresholds)",
+      "Daily total amount > 2\u00d7 user's usual daily total",
+      "Single transaction exceeding $10,000 KYD triggers mandatory biometric verification",
+      "Cumulative daily transaction volume between $9,000 and $9,999 KYD (potential structuring detection)"
+    ],
+    "frequency_based": [
+      "Transactions per day > 2\u00d7 user's normal frequency",
+      "Multiple transactions within 15 min (burst activity)",
+      "More than 10 transactions in a single day triggers CIMA review"
+    ],
+    "location_based": [
+      "Transaction from a new country not seen in history",
+      "Rapid country switching within short time (geo-hopping)",
+      "Real-time sanctions screening hit (UN/OFAC/UK lists) - Immediate Block"
+    ],
+    "behavioural_pattern": [
+      "Inconsistent behaviour vs declared profile (e.g., high volume from low-activity history)",
+      "Sudden change in transaction patterns suggesting layering",
+      "Smurfing pattern: Multiple sub-$10k transactions aggregating to >$10k within 24 hours"
+    ],
+    "risk_score": {
+      "range": "0-100",
+      "rules": [
+        {
+          "category": "Amount",
+          "rule": "Single tx > 5\u00d7 user avg",
+          "points": 55
+        },
+        {
+          "category": "Amount",
+          "rule": "Single tx > 3\u00d7 user avg (but \u22645\u00d7)",
+          "points": 35
+        },
+        {
+          "category": "Amount/Volume",
+          "rule": "Daily total > 2\u00d7 avg daily",
+          "points": 30
+        },
+        {
+          "category": "Frequency",
+          "rule": "\u22654 tx in \u226415 min (burst)",
+          "points": 35
+        },
+        {
+          "category": "Geo",
+          "rule": "New country (never seen before)",
+          "points": 45
+        },
+        {
+          "category": "Geo",
+          "rule": "Impossible geo hop (actual time < min travel time)",
+          "points": 60
+        },
+        {
+          "category": "Compliance",
+          "rule": "Structuring/Smurfing detected (Aggregated volume just below $10k)",
+          "points": 85
+        },
+        {
+          "category": "Compliance",
+          "rule": "Real-time Sanctions Hit",
+          "points": 100
+        }
+      ],
+      "capping": "min(risk_score, 100)"
+    },
+    "risk_bands": {
+      "HIGH": "\u226575 (Immediate STR filing required within 48h)",
+      "MEDIUM": "50\u201374 (review for AML risks)",
+      "LOW": "25\u201349 (watch for patterns)",
+      "CLEAN": "<25"
+    }
+  }
+}

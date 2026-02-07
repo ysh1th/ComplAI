@@ -1,0 +1,67 @@
+  {
+  "jurisdiction": "Malta",
+  "jurisdiction_code": "MT",
+  "current_version": "v1",
+  "old_regulations": [
+    {
+      "regulation_update_id": "MT-OLD-001",
+      "update_title": "Virtual Financial Assets Act 2018",
+      "summary": "Establishes a regulatory framework for virtual financial assets, requiring licensing for issuers and service providers, with emphasis on AML compliance and investor protection. Fines up to €150,000 for violations.",
+      "date_effective": "November 1, 2018"
+    },
+    {
+      "regulation_update_id": "MT-OLD-002",
+      "update_title": "Malta Digital Innovation Authority Act 2018",
+      "summary": "Creates the Malta Digital Innovation Authority (MDIA) to certify DLT platforms and smart contracts, ensuring technology reliability and consumer protection in the digital asset space.",
+      "date_effective": "November 1, 2018"
+    },
+    {
+      "regulation_update_id": "MT-OLD-003",
+      "update_title": "Innovative Technology Arrangements and Services Act 2018",
+      "summary": "Provides a framework for registration and regulation of technology service providers and innovative technology arrangements, including blockchain-based platforms and smart contracts.",
+      "date_effective": "November 1, 2018"
+    }
+  ],
+  "new_regulations": [],
+  "rulebook": {
+    "amount_based": [
+      "Transaction amount > 3× user's historical average (violates basic AML thresholds under VFA Act)",
+      "Daily total amount > 2× user's usual daily total",
+      "Single transaction exceeding €15,000 requires enhanced due diligence"
+    ],
+    "frequency_based": [
+      "Transactions per day > 2× user's normal frequency",
+      "Multiple transactions within 15 min (burst activity)",
+      "More than 10 transactions in a single day triggers review"
+    ],
+    "location_based": [
+      "Transaction from a new country not seen in history",
+      "Rapid country switching within short time (geo-hopping)",
+      "Transactions from FATF non-compliant jurisdictions"
+    ],
+    "behavioural_pattern": [
+      "Inconsistent behaviour vs declared profile (e.g., high volume from low-activity history)",
+      "Sudden change in transaction currency patterns",
+      "Round-number transactions suggesting structuring"
+    ],
+    "risk_score": {
+      "range": "0-100",
+      "rules": [
+        { "category": "Amount", "rule": "Single tx > 5× user avg", "points": 55 },
+        { "category": "Amount", "rule": "Single tx > 3× user avg (but ≤5×)", "points": 35 },
+        { "category": "Amount/Volume", "rule": "Daily total > 2× avg daily", "points": 30 },
+        { "category": "Frequency", "rule": "≥4 tx in ≤15 min (burst)", "points": 35 },
+        { "category": "Geo", "rule": "New country (never seen before)", "points": 45 },
+        { "category": "Geo", "rule": "Impossible geo hop (actual time < min travel time)", "points": 60 },
+        { "category": "Profile", "rule": "High volume inconsistent with profile", "points": 35 }
+      ],
+      "capping": "min(risk_score, 100)"
+    },
+    "risk_bands": {
+      "HIGH": "≥75 (alert for MFSA non-compliance)",
+      "MEDIUM": "50–74 (review for AML risks)",
+      "LOW": "25–49 (watch for patterns)",
+      "CLEAN": "<25"
+    }
+  }
+}

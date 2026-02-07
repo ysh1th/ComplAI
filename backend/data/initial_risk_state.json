@@ -1,0 +1,42 @@
+{
+  "MT-USER-001": {
+    "risk_score": 5,
+    "risk_band": "CLEAN"
+  },
+  "MT-USER-002": {
+    "risk_score": 18,
+    "risk_band": "CLEAN"
+  },
+  "MT-USER-003": {
+    "risk_score": 13,
+    "risk_band": "CLEAN"
+  },
+  "AE-USER-001": {
+    "risk_score": 16,
+    "risk_band": "CLEAN"
+  },
+  "AE-USER-002": {
+    "risk_score": 13,
+    "risk_band": "CLEAN"
+  },
+  "AE-USER-003": {
+    "risk_score": 21,
+    "risk_band": "CLEAN"
+  },
+  "AE-USER-004": {
+    "risk_score": 12,
+    "risk_band": "CLEAN"
+  },
+  "KY-USER-001": {
+    "risk_score": 14,
+    "risk_band": "CLEAN"
+  },
+  "KY-USER-002": {
+    "risk_score": 15,
+    "risk_band": "CLEAN"
+  },
+  "KY-USER-003": {
+    "risk_score": 11,
+    "risk_band": "CLEAN"
+  }
+}
