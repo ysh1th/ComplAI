@@ -139,22 +139,6 @@ The dashboard will be available at **http://localhost:3000**.
 
 ---
 
-## Demo Script (2.5 minutes)
-
-### Act 1: The Regulatory Landscape (20s)
-- Open Regulatory Hub → UAE tab → Show v1 is active → Show current rulebook
-
-### Act 2: New Compliance Arrives (45s)
-- Find "VARA Stablecoin Issuance Guidelines" → Click Push → Watch 4 agents run → Show rulebook diff → "Our AI autonomously updated the monitoring rulebook. We're now live on v2."
-
-### Act 3: Business as Usual (15s)
-- Switch to Live Monitor → Show all users mostly CLEAN/LOW → Click a normal user
-
-### Act 4: The Anomaly (40s)
-- Open Data Injection Flow → Select a UAE user → Set amount: $55,000, country: North Korea → Click "Inject Transaction Batch" → Watch agents run → User jumps to #1 with Risk 100 HIGH → AI Guardian shows full reasoning citing VARA violations
-
-### Act 5: The Punchline (15s)
-- "Two agentic workflows. The first read a new regulation and autonomously rewrote the rulebook. The second detected an anomaly by reasoning about physics, behavior, and the rules that were just updated 60 seconds ago. Eight AI agents, full explainability, every decision traceable."
 
 ---
 
