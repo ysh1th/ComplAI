@@ -1,0 +1,20 @@
+[
+  {
+    "regulation_update_id": "KY-REG-001",
+    "update_title": "VASP Enhanced Due Diligence Requirements",
+    "summary": "Strengthens customer due diligence for VASPs with mandatory biometric verification for transactions over $10,000 KYD, enhanced screening against OFAC and UN sanctions lists, and real-time transaction monitoring. Introduces a 48-hour suspicious transaction reporting window to FRA.",
+    "date_effective": "April 1, 2026"
+  },
+  {
+    "regulation_update_id": "KY-REG-002",
+    "update_title": "DeFi Protocol Governance Standards",
+    "summary": "First-of-its-kind regulation requiring DeFi protocols operating through Cayman entities to implement governance frameworks, including admin key management, smart contract audit requirements, and investor protection mechanisms. CIMA supervision applies.",
+    "date_effective": "July 20, 2026"
+  },
+  {
+    "regulation_update_id": "KY-REG-003",
+    "update_title": "Cross-Border Crypto Transfer Reporting",
+    "summary": "Mandates reporting of all cross-border crypto transfers above $5,000 KYD to the Tax Information Authority. Implements the OECD Common Reporting Standard for digital assets with automatic information exchange with partner jurisdictions.",
+    "date_effective": "November 1, 2026"
+  }
+]

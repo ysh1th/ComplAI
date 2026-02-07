@@ -1,0 +1,20 @@
+[
+  {
+    "regulation_update_id": "MT-REG-001",
+    "update_title": "VFA Licensing Enhancements",
+    "summary": "Requires all VFA service providers to renew licenses annually with MFSA, including enhanced cybersecurity audits and AML risk assessments. Introduces mandatory penetration testing and incident response plans. Fines up to €200,000 for non-compliance.",
+    "date_effective": "April 10, 2026"
+  },
+  {
+    "regulation_update_id": "MT-REG-002",
+    "update_title": "MDIA DLT System Certification",
+    "summary": "Mandates certification of DLT platforms for reliability, with quarterly reporting on system uptime and security breaches; prohibits non-certified platforms from operating. Requires annual third-party audits.",
+    "date_effective": "July 15, 2026"
+  },
+  {
+    "regulation_update_id": "MT-REG-003",
+    "update_title": "EU-Aligned AML Reporting for VFAs",
+    "summary": "Expands AML obligations to include real-time transaction monitoring over €1,000, with mandatory reports to FIAU within 24 hours. Aligns with EU's Transfer of Funds Regulation (TFR) for cross-border transfers. Introduces travel rule compliance for all VFA transfers.",
+    "date_effective": "October 20, 2026"
+  }
+]

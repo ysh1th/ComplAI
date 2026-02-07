@@ -1,0 +1,144 @@
+[
+  {
+    "user_id": "MT-USER-001",
+    "age": 25,
+    "country": "MT",
+    "full_name": "Marco Vella",
+    "income_level": "medium",
+    "occupation": "Freelancer",
+    "kyc_status": "verified",
+    "risk_profile": "low",
+    "historical_countries": [
+      "MT",
+      "IT"
+    ]
+  },
+  {
+    "user_id": "MT-USER-002",
+    "age": 25,
+    "country": "MT",
+    "full_name": "Sofia Borg",
+    "income_level": "high",
+    "occupation": "Financial Analyst",
+    "kyc_status": "verified",
+    "risk_profile": "low",
+    "historical_countries": [
+      "MT",
+      "DE",
+      "IT"
+    ]
+  },
+  {
+    "user_id": "MT-USER-003",
+    "age": 25,
+    "country": "MT",
+    "full_name": "Luca Camilleri",
+    "income_level": "low",
+    "occupation": "Student",
+    "kyc_status": "verified",
+    "risk_profile": "low",
+    "historical_countries": [
+      "MT"
+    ]
+  },
+  {
+    "user_id": "AE-USER-001",
+    "age": 25,
+    "country": "AE",
+    "full_name": "Rashid Al-Maktoum",
+    "income_level": "high",
+    "occupation": "Engineer",
+    "kyc_status": "verified",
+    "risk_profile": "low",
+    "historical_countries": [
+      "AE",
+      "SA"
+    ]
+  },
+  {
+    "user_id": "AE-USER-002",
+    "age": 25,
+    "country": "AE",
+    "full_name": "Aisha Khalifa",
+    "income_level": "medium",
+    "occupation": "Marketing Manager",
+    "kyc_status": "verified",
+    "risk_profile": "low",
+    "historical_countries": [
+      "AE",
+      "BH",
+      "SA"
+    ]
+  },
+  {
+    "user_id": "AE-USER-003",
+    "age": 25,
+    "country": "AE",
+    "full_name": "Omar Farooq",
+    "income_level": "high",
+    "occupation": "Entrepreneur",
+    "kyc_status": "verified",
+    "risk_profile": "low",
+    "historical_countries": [
+      "AE",
+      "PK",
+      "GB"
+    ]
+  },
+  {
+    "user_id": "AE-USER-004",
+    "age": 25,
+    "country": "AE",
+    "full_name": "Fatima Noor",
+    "income_level": "low",
+    "occupation": "Student",
+    "kyc_status": "pending",
+    "risk_profile": "low",
+    "historical_countries": [
+      "AE"
+    ]
+  },
+  {
+    "user_id": "KY-USER-001",
+    "age": 25,
+    "country": "KY",
+    "full_name": "Alex Johnson",
+    "income_level": "low",
+    "occupation": "Student",
+    "kyc_status": "verified",
+    "risk_profile": "low",
+    "historical_countries": [
+      "KY",
+      "US"
+    ]
+  },
+  {
+    "user_id": "KY-USER-002",
+    "age": 25,
+    "country": "KY",
+    "full_name": "Brianna Clarke",
+    "income_level": "high",
+    "occupation": "Fund Manager",
+    "kyc_status": "verified",
+    "risk_profile": "low",
+    "historical_countries": [
+      "KY",
+      "US",
+      "GB"
+    ]
+  },
+  {
+    "user_id": "KY-USER-003",
+    "age": 25,
+    "country": "KY",
+    "full_name": "Derek Walters",
+    "income_level": "medium",
+    "occupation": "Software Developer",
+    "kyc_status": "verified",
+    "risk_profile": "low",
+    "historical_countries": [
+      "KY",
+      "US"
+    ]
+  }
+]

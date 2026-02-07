@@ -1,0 +1,15 @@
+[project]
+name = "deriv-ai-compliance-backend"
+version = "1.0.0"
+description = "Deriv AI Compliance Manager — FastAPI backend with agentic workflows"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    "pydantic>=2.0.0",
+    "python-dotenv>=1.0.0",
+    "openai>=1.0.0",
+    "httpx>=0.25.0",
+    "faker>=20.0.0",
+    "google-genai>=1.62.0",
+]
