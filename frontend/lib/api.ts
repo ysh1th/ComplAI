@@ -3,7 +3,9 @@ import type {
   FullAnalysisResponse,
   ComplianceData,
   CompliancePushResponse,
+  ComplianceDraft,
   IngestBatchRequest,
+  Rulebook,
 } from "./types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
@@ -57,6 +59,30 @@ export async function pushCompliance(
     {
       method: "POST",
       body: JSON.stringify({ regulation_update_id: regulationUpdateId }),
+    }
+  );
+}
+
+export async function getDrafts(
+  jurisdictionCode?: string
+): Promise<{ drafts: ComplianceDraft[] }> {
+  const url = jurisdictionCode
+    ? `/api/drafts?jurisdiction_code=${jurisdictionCode}`
+    : "/api/drafts";
+  return fetchApi<{ drafts: ComplianceDraft[] }>(url);
+}
+
+export async function approveDraft(
+  draftId: string,
+  editedRulebook?: Rulebook
+): Promise<{ status: string; draft: ComplianceDraft; message: string }> {
+  return fetchApi<{ status: string; draft: ComplianceDraft; message: string }>(
+    `/api/drafts/${draftId}/approve`,
+    {
+      method: "POST",
+      body: JSON.stringify(
+        editedRulebook ? { edited_rulebook: editedRulebook } : {}
+      ),
     }
   );
 }

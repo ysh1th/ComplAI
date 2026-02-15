@@ -1,8 +1,12 @@
 "use client";
 
 import { useState, useCallback, useRef } from "react";
-import type { ComplianceData, CompliancePushResponse } from "@/lib/types";
-import { getCompliance, pushCompliance } from "@/lib/api";
+import type { ComplianceData, CompliancePushResponse, Rulebook } from "@/lib/types";
+import {
+  getCompliance,
+  pushCompliance,
+  approveDraft as approveDraftApi,
+} from "@/lib/api";
 
 export function useCompliance() {
   const [data, setData] = useState<ComplianceData | null>(null);
@@ -11,12 +15,13 @@ export function useCompliance() {
   const [pushingId, setPushingId] = useState<string | null>(null);
   const [pushResult, setPushResult] = useState<CompliancePushResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [approving, setApproving] = useState(false);
+  const [draftStatus, setDraftStatus] = useState<"pending" | "approved">("pending");
   const preservePushResult = useRef(false);
 
   const fetchCompliance = useCallback(async (jurisdictionCode: string) => {
     try {
       setLoading(true);
-      // Only clear pushResult on normal fetches, not after a push
       if (!preservePushResult.current) {
         setPushResult(null);
       }
@@ -37,11 +42,10 @@ export function useCompliance() {
         setPushing(true);
         setPushingId(regulationId);
         setError(null);
+        setDraftStatus("pending");
         const result = await pushCompliance(jurisdictionCode, regulationId);
         setPushResult(result);
-        // Preserve pushResult during the post-push refetch
         preservePushResult.current = true;
-        // Refetch compliance data to get updated state
         await fetchCompliance(jurisdictionCode);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to push compliance");
@@ -53,6 +57,25 @@ export function useCompliance() {
     [fetchCompliance]
   );
 
+  const approveDraft = useCallback(
+    async (jurisdictionCode: string, editedRulebook?: Rulebook) => {
+      if (!pushResult?.draft_id) return;
+      try {
+        setApproving(true);
+        setError(null);
+        await approveDraftApi(pushResult.draft_id, editedRulebook);
+        setDraftStatus("approved");
+        preservePushResult.current = true;
+        await fetchCompliance(jurisdictionCode);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to approve draft");
+      } finally {
+        setApproving(false);
+      }
+    },
+    [pushResult, fetchCompliance]
+  );
+
   return {
     data,
     loading,
@@ -60,8 +83,14 @@ export function useCompliance() {
     pushingId,
     pushResult,
     error,
+    approving,
+    draftStatus,
     fetchCompliance,
     push,
-    clearPushResult: () => setPushResult(null),
+    approveDraft,
+    clearPushResult: () => {
+      setPushResult(null);
+      setDraftStatus("pending");
+    },
   };
 }

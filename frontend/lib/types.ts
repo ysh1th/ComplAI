@@ -1,5 +1,3 @@
-// TypeScript interfaces matching backend Pydantic models
-
 export interface UserProfile {
   user_id: string;
   age: number;
@@ -85,6 +83,8 @@ export interface AgentLogEntry {
   status: "success" | "alert" | "high" | "complete" | "error";
   message: string;
   duration_ms: number;
+  retry_count?: number;
+  retry_type?: "technical" | "logical" | null;
 }
 
 export type RiskBand = "HIGH" | "MEDIUM" | "LOW" | "CLEAN";
@@ -117,6 +117,8 @@ export interface FullAnalysisResponse {
   baseline: UserBaseline;
   generated_transactions: RawTransaction[];
   timestamp: string;
+  trace_id?: string;
+  validator_loops?: number;
 }
 
 export interface ComplianceData {
@@ -138,6 +140,25 @@ export interface CompliancePushResponse {
   rulebook_changes: string;
   updated_rulebook: Rulebook;
   agent_chain: AgentLogEntry[];
+  draft_id?: string;
+  status?: string;
+}
+
+export interface ComplianceDraft {
+  id: string;
+  jurisdiction_code: string;
+  proposed_version: string;
+  rulebook: Rulebook;
+  previous_rulebook?: Rulebook;
+  changes_description: string;
+  summary: string;
+  comparison_points: string[];
+  impact_analysis: string;
+  agent_chain: AgentLogEntry[];
+  regulation_id: string;
+  status: "pending" | "approved" | "rejected";
+  created_at: string;
+  reviewed_at?: string;
 }
 
 export interface IngestBatchRequest {
