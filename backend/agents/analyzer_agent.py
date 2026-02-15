@@ -1,33 +1,22 @@
-"""Analyzer Agent — LLM agent that analyzes impact on users & company."""
-
-import json
 import time
 import logging
-from pathlib import Path
 
 from models.compliance import Regulation
 from models.user import UserProfile, UserBaseline
 from models.agent_log import AgentLogEntry
 from utils.llm import call_llm
+from utils.database import get_all_profiles, get_all_baselines
 
 logger = logging.getLogger(__name__)
-DATA_DIR = Path(__file__).parent.parent / "data"
 
 
 def _load_users_for_jurisdiction(jurisdiction_code: str) -> list[tuple[UserProfile, UserBaseline | None]]:
-    """Load users and baselines for a specific jurisdiction."""
-    users_path = DATA_DIR / "users.json"
-    baselines_path = DATA_DIR / "baselines.json"
-
-    with open(users_path, "r") as f:
-        users = json.load(f)
-    with open(baselines_path, "r") as f:
-        baselines = json.load(f)
-
+    profiles = get_all_profiles()
+    baselines = get_all_baselines()
     baseline_map = {b["user_id"]: b for b in baselines}
     result = []
 
-    for u in users:
+    for u in profiles:
         if u["country"] == jurisdiction_code:
             profile = UserProfile(**u)
             baseline_data = baseline_map.get(u["user_id"])
@@ -43,10 +32,6 @@ async def run_analyzer_agent(
     jurisdiction: str,
     jurisdiction_code: str,
 ) -> tuple[str, AgentLogEntry]:
-    """
-    Agent 7: Analyzer Agent (LLM)
-    Analyzes impact on users & company with specific numbers.
-    """
     start = time.time()
 
     users_data = _load_users_for_jurisdiction(jurisdiction_code)

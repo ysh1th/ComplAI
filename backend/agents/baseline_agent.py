@@ -1,19 +1,15 @@
-"""Baseline Calculator Agent — LLM agent that computes/updates user baselines."""
-
-import json
 import time
 import logging
 import statistics
-from pathlib import Path
 from datetime import datetime
 
 from models.user import UserProfile, UserBaseline
 from models.transaction import RawTransaction
 from models.agent_log import AgentLogEntry
 from utils.llm import call_llm_json
+from utils.database import get_baseline, upsert_baseline
 
 logger = logging.getLogger(__name__)
-DATA_DIR = Path(__file__).parent.parent / "data"
 
 
 def _compute_fallback_baseline(
@@ -21,7 +17,6 @@ def _compute_fallback_baseline(
     transactions: list[RawTransaction],
     existing_baseline: UserBaseline | None = None,
 ) -> UserBaseline:
-    """Deterministic fallback if LLM fails."""
     if not transactions:
         if existing_baseline:
             return existing_baseline
@@ -39,7 +34,6 @@ def _compute_fallback_baseline(
     avg_amount = statistics.mean(amounts) if amounts else 100.0
     std_dev = statistics.stdev(amounts) if len(amounts) > 1 else 30.0
 
-    # Group by day
     daily_totals: dict[str, float] = {}
     daily_counts: dict[str, int] = {}
     hours = []
@@ -73,40 +67,10 @@ def _compute_fallback_baseline(
 
 
 def _load_existing_baseline(user_id: str) -> UserBaseline | None:
-    """Load existing baseline from baselines.json."""
-    baselines_path = DATA_DIR / "baselines.json"
-    try:
-        with open(baselines_path, "r") as f:
-            baselines = json.load(f)
-        for b in baselines:
-            if b["user_id"] == user_id:
-                return UserBaseline(**b)
-    except Exception:
-        pass
+    data = get_baseline(user_id)
+    if data:
+        return UserBaseline(**data)
     return None
-
-
-def _save_baseline(baseline: UserBaseline) -> None:
-    """Save updated baseline back to baselines.json."""
-    baselines_path = DATA_DIR / "baselines.json"
-    try:
-        with open(baselines_path, "r") as f:
-            baselines = json.load(f)
-    except Exception:
-        baselines = []
-
-    # Update or append
-    found = False
-    for i, b in enumerate(baselines):
-        if b["user_id"] == baseline.user_id:
-            baselines[i] = baseline.model_dump()
-            found = True
-            break
-    if not found:
-        baselines.append(baseline.model_dump())
-
-    with open(baselines_path, "w") as f:
-        json.dump(baselines, f, indent=2)
 
 
 async def run_baseline_agent(
@@ -114,14 +78,9 @@ async def run_baseline_agent(
     transactions: list[RawTransaction],
     profile: UserProfile,
 ) -> tuple[UserBaseline, AgentLogEntry]:
-    """
-    Agent 3: Baseline Calculator Agent (LLM)
-    Computes/updates user baselines from transaction history.
-    """
     start = time.time()
     existing_baseline = _load_existing_baseline(user_id)
 
-    # Format transactions for LLM
     tx_list = "\n".join([
         f"- ${tx.transaction_amount_usd:.2f} {tx.transaction_currency} ({tx.transaction_type}) "
         f"at {tx.timestamp} from {tx.transaction_city}, {tx.transaction_country}"
@@ -182,8 +141,7 @@ Return ONLY valid JSON, no explanation."""
         baseline = _compute_fallback_baseline(user_id, transactions, existing_baseline)
         source = "fallback"
 
-    # Save updated baseline
-    _save_baseline(baseline)
+    upsert_baseline(baseline)
 
     duration_ms = int((time.time() - start) * 1000)
 

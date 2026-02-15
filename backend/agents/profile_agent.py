@@ -1,34 +1,15 @@
-"""Profile Agent — Local agent that loads user profile from JSON."""
-
-import json
 import time
-from pathlib import Path
-
 from models.user import UserProfile
 from models.agent_log import AgentLogEntry
-
-DATA_DIR = Path(__file__).parent.parent / "data"
+from utils.database import get_profile
 
 
 def run_profile_agent(user_id: str) -> tuple[UserProfile, AgentLogEntry]:
-    """
-    Agent 1: Profile Agent (Local)
-    Loads user profile from data/users.json.
-    """
     start = time.time()
 
-    users_path = DATA_DIR / "users.json"
-    with open(users_path, "r") as f:
-        users = json.load(f)
-
-    user_data = None
-    for u in users:
-        if u["user_id"] == user_id:
-            user_data = u
-            break
+    user_data = get_profile(user_id)
 
     if user_data is None:
-        duration_ms = int((time.time() - start) * 1000)
         raise ValueError(f"User {user_id} not found")
 
     profile = UserProfile(**user_data)

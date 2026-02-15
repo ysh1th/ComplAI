@@ -1,9 +1,9 @@
 from pydantic import BaseModel
-from typing import Literal, Any, Optional
+from typing import Literal, Optional
 
 from .user import UserBaseline
 from .transaction import PreprocessedTransaction, RawTransaction
-from .compliance import Rulebook, Regulation
+from .compliance import Rulebook
 
 
 class AgentLogEntry(BaseModel):
@@ -12,6 +12,8 @@ class AgentLogEntry(BaseModel):
     status: Literal["success", "alert", "high", "complete", "error"]
     message: str
     duration_ms: int
+    retry_count: int = 0
+    retry_type: Optional[str] = None
 
 
 class FullAnalysisResponse(BaseModel):
@@ -29,6 +31,8 @@ class FullAnalysisResponse(BaseModel):
     baseline: UserBaseline
     generated_transactions: list[RawTransaction]
     timestamp: str
+    trace_id: Optional[str] = None
+    validator_loops: int = 0
 
 
 class CompliancePushResponse(BaseModel):
@@ -40,3 +44,5 @@ class CompliancePushResponse(BaseModel):
     rulebook_changes: str
     updated_rulebook: Rulebook
     agent_chain: list[AgentLogEntry]
+    draft_id: Optional[str] = None
+    status: str = "pending_review"
