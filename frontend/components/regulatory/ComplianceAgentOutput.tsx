@@ -216,7 +216,7 @@ export function ComplianceAgentOutput({
   const updateRiskScoreRule = (index: number, field: keyof RuleEntry, value: string | number) => {
     const updated = structuredClone(editedRulebook);
     if (updated.risk_score?.rules) {
-      (updated.risk_score.rules[index] as Record<string, unknown>)[field] = value;
+      (updated.risk_score.rules[index] as unknown as Record<string, unknown>)[field] = value;
       setEditedRulebook(updated);
     }
   };
