@@ -136,10 +136,18 @@ def _get_init_sync() -> dict:
     return {"users": result}
 
 
+@app.get("/api/init/ping")
+async def get_init_ping():
+    return {"ok": True}
+
+
 @app.get("/api/init")
 async def get_init():
+    logger.info("GET /api/init received")
     try:
-        return await asyncio.to_thread(_get_init_sync)
+        out = await asyncio.to_thread(_get_init_sync)
+        logger.info("GET /api/init completed")
+        return out
     except Exception as e:
         logger.exception("get_init failed")
         raise HTTPException(
