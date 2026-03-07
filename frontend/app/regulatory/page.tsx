@@ -14,28 +14,27 @@ import type { Rulebook } from "@/lib/types";
 export default function RegulatoryPage() {
   const [activeTab, setActiveTab] = useState("AE");
   const {
-    data,
     loading,
     pushing,
     pushingId,
-    pushResult,
     error,
     approving,
-    draftStatus,
     fetchCompliance,
     push,
     approveDraft,
-    clearPushResult,
+    getData,
+    getPushResult,
+    getDraftStatus,
   } = useCompliance();
   const rulebookRef = useRef<HTMLDivElement>(null);
+
+  const data = getData(activeTab);
+  const pushResult = getPushResult(activeTab);
+  const draftStatus = getDraftStatus(activeTab);
 
   useEffect(() => {
     fetchCompliance(activeTab);
   }, [activeTab, fetchCompliance]);
-
-  useEffect(() => {
-    clearPushResult();
-  }, [activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (pushResult && rulebookRef.current) {

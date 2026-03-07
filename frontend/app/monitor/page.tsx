@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { useUsers } from "@/hooks/useUsers";
+import { useCallback, useState } from "react";
+import { useUsersContext } from "@/context/UsersContext";
 import { useInjectBatch } from "@/hooks/useInjectBatch";
 import { UserRoster } from "@/components/monitor/UserRoster";
 import { IntelligenceDetail } from "@/components/monitor/IntelligenceDetail";
@@ -9,9 +9,14 @@ import type { IngestBatchRequest } from "@/lib/types";
 import { Activity } from "lucide-react";
 
 export default function MonitorPage() {
-  const { users, loading, updateUserFromAnalysis } = useUsers();
+  const {
+    users,
+    loading,
+    updateUserFromAnalysis,
+    selectedUserId,
+    setSelectedUserId,
+  } = useUsersContext();
   const { loading: injecting, inject } = useInjectBatch();
-  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [recentlyUpdatedId, setRecentlyUpdatedId] = useState<string | null>(null);
 
   const selectedUser = users.find(
@@ -32,12 +37,11 @@ export default function MonitorPage() {
         // Error handled by hook
       }
     },
-    [inject, updateUserFromAnalysis]
+    [inject, updateUserFromAnalysis, setSelectedUserId]
   );
 
   return (
     <div className="h-full flex flex-col relative">
-      {/* Header */}
       <div className="flex items-center gap-3 px-6 py-4 border-b border-deriv-dark-border bg-deriv-dark-card/50">
         <Activity className="w-6 h-6 text-deriv-red" />
         <h1 className="text-xl font-bold text-white">Live Monitor</h1>
@@ -46,9 +50,7 @@ export default function MonitorPage() {
         </span>
       </div>
 
-      {/* Main content */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Left: User Roster (35%) */}
         <div className="w-[35%] min-w-[280px] max-w-[400px] border-r border-deriv-dark-border bg-deriv-dark-card/30">
           <UserRoster
             users={users}
@@ -59,7 +61,6 @@ export default function MonitorPage() {
           />
         </div>
 
-        {/* Right: Intelligence Detail (65%) */}
         <div className="flex-1 bg-deriv-black/50">
           {selectedUser ? (
             <IntelligenceDetail

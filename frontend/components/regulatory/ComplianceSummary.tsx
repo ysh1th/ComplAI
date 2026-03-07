@@ -79,11 +79,11 @@ export function ComplianceSummary({ data }: ComplianceSummaryProps) {
             </span>
           </div>
           <div className="space-y-2">
-            {data.new_regulations.map((reg) => {
+            {data.new_regulations.map((reg, idx) => {
               const isExpanded = expandedIds.has(reg.regulation_update_id);
               return (
                 <div
-                  key={reg.regulation_update_id}
+                  key={`${reg.regulation_update_id}-${idx}`}
                   className="rounded-lg border border-deriv-teal/20 bg-deriv-teal/5 p-3 transition-colors"
                 >
                   <button

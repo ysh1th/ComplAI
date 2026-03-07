@@ -3,6 +3,7 @@
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { Sidebar } from "@/components/layout/Sidebar";
+import { UsersProvider } from "@/context/UsersContext";
 
 export default function RootLayout({
   children,
@@ -20,10 +21,12 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         <ThemeProvider attribute="data-theme" defaultTheme="dark">
-          <div className="flex h-screen overflow-hidden">
-            <Sidebar />
-            <main className="flex-1 overflow-auto">{children}</main>
-          </div>
+          <UsersProvider>
+            <div className="flex h-screen overflow-hidden">
+              <Sidebar />
+              <main className="flex-1 overflow-auto">{children}</main>
+            </div>
+          </UsersProvider>
         </ThemeProvider>
       </body>
     </html>

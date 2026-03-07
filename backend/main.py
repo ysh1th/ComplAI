@@ -54,11 +54,15 @@ if railway_url:
     ALLOWED_ORIGINS.append(f"https://{railway_url}")
 frontend_url = os.getenv("FRONTEND_URL")
 if frontend_url:
-    ALLOWED_ORIGINS.append(frontend_url)
+    for url in frontend_url.split(","):
+        stripped = url.strip()
+        if stripped:
+            ALLOWED_ORIGINS.append(stripped)
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
