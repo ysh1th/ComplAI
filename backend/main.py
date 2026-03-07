@@ -99,15 +99,12 @@ class DraftApproveRequest(BaseModel):
 
 # ── API Endpoints ──
 
-@app.get("/api/init")
-async def get_init():
+def _get_init_sync() -> dict:
     profiles = db.get_all_profiles()
     baselines = db.get_all_baselines()
     risk_states = db.get_all_risk_states()
     all_history = db.get_historical_transactions()
-
     baseline_map = {b["user_id"]: b for b in baselines}
-
     result = []
     for u in profiles:
         user_id = u["user_id"]
@@ -122,16 +119,12 @@ async def get_init():
             "min_tx_amount_usd": 0.0,
             "max_tx_amount_usd": 0.0,
         })
-
         risk_state = risk_states.get(user_id, {})
         history = all_history.get(user_id, []) if isinstance(all_history, dict) else []
-
         profile_data = {**u}
         if "risk_profile" in risk_state:
             profile_data["risk_profile"] = risk_state["risk_profile"]
-
         latest_analysis = db.get_latest_analysis(user_id)
-
         result.append({
             "profile": profile_data,
             "baseline": baseline,
@@ -140,8 +133,19 @@ async def get_init():
             "latest_analysis": latest_analysis,
             "historical_transactions": history,
         })
-
     return {"users": result}
+
+
+@app.get("/api/init")
+async def get_init():
+    try:
+        return await asyncio.to_thread(_get_init_sync)
+    except Exception as e:
+        logger.exception("get_init failed")
+        raise HTTPException(
+            status_code=500,
+            detail={"message": "Init failed", "error": str(e)},
+        )
 
 
 @app.get("/api/compliance/{jurisdiction_code}")
