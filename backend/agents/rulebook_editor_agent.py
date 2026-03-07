@@ -4,7 +4,7 @@ import logging
 
 from models.compliance import Rulebook
 from models.agent_log import AgentLogEntry
-from utils.llm import call_llm_json
+from utils.llm import call_llm_json, MODEL_PRO
 from utils.rulebook_guardrails import apply_guardrails
 
 logger = logging.getLogger(__name__)
@@ -81,6 +81,7 @@ Return the COMPLETE updated rulebook as valid JSON with the same structure."""
             system_prompt=system_prompt,
             user_prompt=user_prompt,
             temperature=0.2,
+            model=MODEL_PRO,
         )
 
         rulebook_data = result.get("updated_rulebook", {})

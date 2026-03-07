@@ -5,7 +5,7 @@ import logging
 
 from models.compliance import Regulation
 from models.agent_log import AgentLogEntry
-from utils.llm import call_llm
+from utils.llm import call_llm, MODEL_FAST
 
 logger = logging.getLogger(__name__)
 
@@ -39,6 +39,7 @@ Write a plain-language summary suitable for a compliance officer. Return just th
             user_prompt=user_prompt,
             json_mode=False,
             temperature=0.4,
+            model=MODEL_FAST,
         )
         summary = summary.strip().strip('"')
 

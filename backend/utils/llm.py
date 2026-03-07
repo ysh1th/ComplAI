@@ -13,7 +13,8 @@ logger = logging.getLogger(__name__)
 
 client = genai.Client(api_key=os.getenv("LLM_API_KEY"))
 
-MODEL = os.getenv("LLM_MODEL", "gemini-2.0-flash")
+MODEL_FAST = "gemini-2.0-flash"
+MODEL_PRO = "gemini-2.5-pro"
 
 MAX_RETRIES = 3
 
@@ -25,7 +26,9 @@ async def call_llm(
     user_prompt: str,
     json_mode: bool = True,
     temperature: float = 0.3,
+    model: str | None = None,
 ) -> str:
+    selected_model = model or MODEL_FAST
     config = {
         "temperature": temperature,
         "system_instruction": system_prompt,
@@ -35,7 +38,7 @@ async def call_llm(
 
     response = await asyncio.to_thread(
         client.models.generate_content,
-        model=MODEL,
+        model=selected_model,
         contents=user_prompt,
         config=config,
     )
@@ -51,12 +54,14 @@ async def call_llm_json(
     system_prompt: str,
     user_prompt: str,
     temperature: float = 0.3,
+    model: str | None = None,
 ) -> dict:
     content = await call_llm(
         system_prompt=system_prompt,
         user_prompt=user_prompt,
         json_mode=True,
         temperature=temperature,
+        model=model,
     )
     return json.loads(content)
 
@@ -67,6 +72,7 @@ async def call_llm_validated(
     response_model: Type[T],
     temperature: float = 0.3,
     max_retries: int = MAX_RETRIES,
+    model: str | None = None,
 ) -> tuple[T, int]:
     """
     Call LLM with Pydantic validation retry loop.
@@ -89,6 +95,7 @@ async def call_llm_validated(
                 user_prompt=current_prompt,
                 json_mode=True,
                 temperature=temperature,
+                model=model,
             )
 
             data = json.loads(raw)

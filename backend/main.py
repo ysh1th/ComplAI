@@ -36,8 +36,10 @@ from agents import (
 from scripts.faker_generator import generate_transactions
 from utils import database as db
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO, stream=__import__("sys").stdout)
 logger = logging.getLogger(__name__)
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("httpcore").setLevel(logging.WARNING)
 
 app = FastAPI(
     title="ComplAI — AI Compliance Manager",

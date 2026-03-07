@@ -167,6 +167,25 @@ The dashboard will be available at **http://localhost:3000**.
 
 ---
 
+## Supabase Tables
+
+When using Supabase (see `DEPLOYMENT.md`), the following tables are created by `backend/scripts/create_tables.sql`. Each table’s role:
+
+| Table | Purpose |
+|-------|---------|
+| **profiles** | One row per user: identity (name, country, age, occupation), KYC status, risk profile, and historical countries. Used for the monitor roster and as input to the transaction analysis workflow. |
+| **baselines** | Per-user behavioral baselines: average transaction amount, daily volume, transactions per day, standard deviation, normal hours, etc. Updated by the Baseline Agent and used by the Anomaly Agent to compare new transactions. |
+| **risk_state** | Current risk score, risk band (HIGH/MEDIUM/LOW/CLEAN), and risk profile per user. Updated after each transaction analysis run. Powers the monitor’s risk gauge and user ordering. |
+| **transactions** | All ingested transactions per user: amount, currency, country, city, timestamps, and preprocessed fields (distance, speed, daily totals, etc.). Used for history in the monitor and as input to the analysis pipeline. |
+| **compliance_state** | One row per jurisdiction (MT, AE, KY): current version, old/new regulations JSON, and metadata. Tracks which rulebook version is active per jurisdiction. |
+| **rulebooks** | Versioned rulebooks per jurisdiction. Each row is a version (v1, v2, …) with a JSON rulebook and an `is_active` flag. The active rulebook is used for anomaly scoring and the regulatory hub. |
+| **new_regulations** | Regulation updates available to push: title, summary, effective date, jurisdiction, and `is_pushed` flag. The regulatory hub lists these; pushing runs the compliance workflow and creates a new rulebook version. |
+| **agent_traces** | High-level log of each agent run: type (`transaction_analysis` or `compliance_push`), user or jurisdiction, status, result JSON, timestamps. Used to show “latest analysis” on the monitor and trace detail in the UI. |
+| **agent_steps** | Per-step log within a trace: agent name, order, status, message, duration, retries, and output. Linked to `agent_traces` by `trace_id`. Powers the agent chain view in both monitor and regulatory screens. |
+| **compliance_drafts** | Human-in-the-loop drafts produced by the compliance push workflow: proposed rulebook, comparison, impact analysis, status (pending/approved/rejected). Used for the regulatory hub’s draft review and approve/reject flow. |
+
+---
+
 ## Project Structure
 
 ```
@@ -236,6 +255,22 @@ Deriv_Hackathon/
 | Cayman Islands | KY | Alex Johnson, Brianna Clarke, Derek Walters |
 
 Each jurisdiction starts at **v1** with foundational regulations and an original rulebook. Three new regulations are available to push per jurisdiction (up to v4).
+
+---
+
+## LLM Model Assignment
+
+The backend uses **Gemini 2.0 Flash** for fast, simple tasks and **Gemini 2.5 Pro** for complex reasoning. Each agent is wired to the model that fits its job:
+
+| Agent | Model | Why |
+|-------|-------|-----|
+| Baseline Calculator | `gemini-2.0-flash` | Simple averaging and structured JSON |
+| Summarizer | `gemini-2.0-flash` | Short text summary of a regulation |
+| Comparison | `gemini-2.0-flash` | Straightforward old vs new comparison |
+| Anomaly Validator | `gemini-2.0-flash` | Quick consistency check on existing output |
+| **Anomaly Detector** | `gemini-2.5-pro` | Deep reasoning, rule violations, regulation citing |
+| **Analyzer** | `gemini-2.5-pro` | Nuanced impact analysis with numbers |
+| **Rulebook Editor** | `gemini-2.5-pro` | Complex structured output and rulebook integrity |
 
 ---
 

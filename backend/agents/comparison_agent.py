@@ -6,7 +6,7 @@ import logging
 
 from models.compliance import Regulation
 from models.agent_log import AgentLogEntry
-from utils.llm import call_llm_json
+from utils.llm import call_llm_json, MODEL_FAST
 
 logger = logging.getLogger(__name__)
 
@@ -56,6 +56,7 @@ Return as JSON:
             system_prompt=system_prompt,
             user_prompt=user_prompt,
             temperature=0.3,
+            model=MODEL_FAST,
         )
         raw_points = result.get("comparison_points", [])
         if not isinstance(raw_points, list):

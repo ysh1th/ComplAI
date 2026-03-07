@@ -6,7 +6,7 @@ from datetime import datetime
 from models.user import UserProfile, UserBaseline
 from models.transaction import RawTransaction
 from models.agent_log import AgentLogEntry
-from utils.llm import call_llm_json
+from utils.llm import call_llm_json, MODEL_FAST
 from utils.database import get_baseline, upsert_baseline
 
 logger = logging.getLogger(__name__)
@@ -123,6 +123,7 @@ Return ONLY valid JSON, no explanation."""
             system_prompt=system_prompt,
             user_prompt=user_prompt,
             temperature=0.1,
+            model=MODEL_FAST,
         )
 
         baseline = UserBaseline(

@@ -9,7 +9,7 @@ from models.transaction import PreprocessedTransaction
 from models.compliance import Rulebook
 from models.risk import AnomalyResult
 from models.agent_log import AgentLogEntry
-from utils.llm import call_llm_json
+from utils.llm import call_llm_json, MODEL_PRO
 from utils.geo import calculate_min_travel_hours
 
 logger = logging.getLogger(__name__)
@@ -181,6 +181,7 @@ Return as JSON:
             system_prompt=system_prompt,
             user_prompt=user_prompt,
             temperature=0.3,
+            model=MODEL_PRO,
         )
 
         anomaly_result = AnomalyResult(

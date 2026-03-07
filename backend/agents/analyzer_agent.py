@@ -4,7 +4,7 @@ import logging
 from models.compliance import Regulation
 from models.user import UserProfile, UserBaseline
 from models.agent_log import AgentLogEntry
-from utils.llm import call_llm
+from utils.llm import call_llm, MODEL_PRO
 from utils.database import get_all_profiles, get_all_baselines
 
 logger = logging.getLogger(__name__)
@@ -78,6 +78,7 @@ Return as a structured analysis paragraph (4-6 sentences). No JSON, just text.""
             user_prompt=user_prompt,
             json_mode=False,
             temperature=0.3,
+            model=MODEL_PRO,
         )
         impact_analysis = impact_analysis.strip().strip('"')
 

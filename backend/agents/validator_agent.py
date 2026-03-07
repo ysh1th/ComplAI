@@ -7,7 +7,7 @@ from models.transaction import PreprocessedTransaction
 from models.compliance import Rulebook
 from models.risk import AnomalyResult
 from models.agent_log import AgentLogEntry
-from utils.llm import call_llm_json
+from utils.llm import call_llm_json, MODEL_FAST
 
 logger = logging.getLogger(__name__)
 
@@ -96,6 +96,7 @@ Return JSON:
                 system_prompt=system_prompt,
                 user_prompt=user_prompt,
                 temperature=0.2,
+                model=MODEL_FAST,
             )
 
             is_valid = result.get("is_valid", True)
