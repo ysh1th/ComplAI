@@ -48,7 +48,9 @@ app = FastAPI(
 ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://compl-ai-henna.vercel.app",
 ]
+
 railway_url = os.getenv("RAILWAY_PUBLIC_DOMAIN")
 if railway_url:
     ALLOWED_ORIGINS.append(f"https://{railway_url}")
@@ -62,7 +64,6 @@ if frontend_url:
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
-    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
