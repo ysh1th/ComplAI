@@ -594,6 +594,26 @@ async def health_check():
     }
 
 
+@app.get("/api/debug")
+async def debug_info():
+    return {
+        "port": os.getenv("PORT"),
+        "supabase_url_set": bool(os.getenv("SUPABASE_URL")),
+        "supabase_key_set": bool(os.getenv("SUPABASE_KEY")),
+        "frontend_url": os.getenv("FRONTEND_URL"),
+        "railway_domain": os.getenv("RAILWAY_PUBLIC_DOMAIN"),
+        "allowed_origins": ALLOWED_ORIGINS,
+    }
+
+
+@app.on_event("startup")
+async def startup_log():
+    logger.info(f"PORT={os.getenv('PORT')}")
+    logger.info(f"SUPABASE_URL set: {bool(os.getenv('SUPABASE_URL'))}")
+    logger.info(f"SUPABASE_KEY set: {bool(os.getenv('SUPABASE_KEY'))}")
+    logger.info(f"ALLOWED_ORIGINS: {ALLOWED_ORIGINS}")
+
+
 if __name__ == "__main__":
     import uvicorn
     port = int(os.getenv("PORT", 8000))
