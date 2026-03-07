@@ -49,6 +49,7 @@ ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "https://compl-ai-henna.vercel.app",
+    "https://compl-ai-git-main-ysh1ths-projects.vercel.app",
 ]
 
 railway_url = os.getenv("RAILWAY_PUBLIC_DOMAIN")
