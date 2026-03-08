@@ -73,6 +73,27 @@ The seed script reads from **`backend/data/`** and requires `SUPABASE_URL` and `
 
 **Summary:** Run **`backend/scripts/create_tables.sql`** in the Supabase SQL Editor once, then run **`backend/scripts/seed_supabase.py`** once from your machine (with `backend/.env` set). After that, you only need to deploy Railway and Vercel; no need to run these again unless you reset the database.
 
+### 0.4 Reset database to initial state
+
+To undo experiments (data injection, anomaly detection, regulatory pushes) and restore everything to the initial seed state:
+
+From the **repo root**:
+
+```bash
+cd backend
+python scripts/reset_supabase_regulatory.py
+```
+
+Requires `SUPABASE_URL` and `SUPABASE_KEY` in `backend/.env`. The script:
+
+1. Clears **agent_steps** and **agent_traces**
+2. Clears all **transactions**
+3. Clears **compliance_drafts** and **rulebooks**
+4. Re-seeds **profiles**, **baselines**, **risk_state** (all users set to CLEAN/0), **historical_transactions**, **compliance_state** and v1 **rulebooks** from `backend/data/`
+5. Sets all **new_regulations.is_pushed** to `false`
+
+After the reset, users, baselines, risk scores, transactions, and regulatory state match the initial seed.
+
 ---
 
 ## 1. Railway (Backend)
